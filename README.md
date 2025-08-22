@@ -21,8 +21,8 @@ A gamified Sanskrit vocabulary learning app built with React and TypeScript. Lea
 ### Installation
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd sanskrit-quest
+git clone https://github.com/Nakshatra05/Sanskrit-Quest.git
+cd Sanskrit-Quest
 
 # Install dependencies
 npm install
