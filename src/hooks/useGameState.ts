@@ -11,7 +11,9 @@ const defaultProgress: UserProgress = {
 
 const defaultSettings: Settings = {
   darkMode: false,
-  soundEnabled: true
+  soundEnabled: true,
+  backgroundAnimationEnabled: true,
+  customBackgroundColor: '#ee7752' // Default starting color for animation
 };
 
 export function useGameState() {

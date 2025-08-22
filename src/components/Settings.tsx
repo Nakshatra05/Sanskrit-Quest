@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Moon, Sun, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Moon, Sun, Volume2, VolumeX, RotateCcw, Palette } from 'lucide-react';
 import { Settings as SettingsType } from '../types';
 
 interface SettingsProps {
@@ -129,11 +129,63 @@ export function Settings({
             </div>
           </motion.div>
 
-          {/* Reset Progress */}
+          {/* Background Animation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
+            className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Palette className="text-purple-600" size={24} />
+                <div>
+                  <div className="font-semibold text-gray-800 dark:text-white">
+                    Animated Background
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                    Enable or disable dynamic gradient background
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => onUpdateSettings({ backgroundAnimationEnabled: !settings.backgroundAnimationEnabled })}
+                className={`w-12 h-6 rounded-full p-1 transition-all ${
+                  settings.backgroundAnimationEnabled
+                    ? 'bg-purple-600'
+                    : 'bg-gray-300'
+                }`}
+              >
+                <div
+                  className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${
+                    settings.backgroundAnimationEnabled ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {!settings.backgroundAnimationEnabled && (
+              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <label htmlFor="backgroundColor" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                  Custom Background Color
+                </label>
+                <input
+                  type="color"
+                  id="backgroundColor"
+                  value={settings.customBackgroundColor}
+                  onChange={(e) => onUpdateSettings({ customBackgroundColor: e.target.value })}
+                  className="w-full h-10 rounded-lg border-none cursor-pointer"
+                  style={{ padding: '0', border: 'none' }}
+                />
+              </div>
+            )}
+          </motion.div>
+
+          {/* Reset Progress */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
             className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg"
           >
             <button

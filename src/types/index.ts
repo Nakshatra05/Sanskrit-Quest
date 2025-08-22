@@ -26,6 +26,8 @@ export interface UserProgress {
 export interface Settings {
   darkMode: boolean;
   soundEnabled: boolean;
+  backgroundAnimationEnabled: boolean;
+  customBackgroundColor: string;
 }
 
 export interface LeaderboardEntry {

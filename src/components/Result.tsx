@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, RotateCcw, Home, ChevronRight } from 'lucide-react';
+import { Trophy, RotateCcw, Home, ChevronRight, Frown } from 'lucide-react';
 
 interface ResultProps {
   score: number;
@@ -22,28 +22,37 @@ export function Result({
   hasNext 
 }: ResultProps) {
   const getPerformanceMessage = () => {
-    if (accuracy >= 90) return "Outstanding! 🎉";
-    if (accuracy >= 70) return "Great job! 👏";
-    if (accuracy >= 50) return "Good effort! 👍";
-    return "Keep practicing! 💪";
+    if (accuracy === 100) return "Perfect Score! 🎉";
+    if (accuracy >= 70) return "Great Job! 👏";
+    return "Keep Practicing! 😥";
   };
 
+  const isSuccess = accuracy >= 70; // Define a threshold for success
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4 flex items-center justify-center">
+    <div className={`min-h-screen bg-gradient-to-br ${isSuccess ? 'from-green-50 to-blue-50' : 'from-red-50 to-orange-50'} dark:from-gray-900 dark:to-gray-800 p-4 flex items-center justify-center`}>
       <div className="max-w-md mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl text-center"
         >
-          {/* Trophy Icon */}
+          {/* Icon */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', bounce: 0.5 }}
-            className="mx-auto w-20 h-20 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mb-6"
+            className={`mx-auto w-20 h-20 rounded-full flex items-center justify-center mb-6 ${
+              isSuccess
+                ? 'bg-gradient-to-r from-yellow-400 to-yellow-600'
+                : 'bg-gradient-to-r from-red-400 to-red-600'
+            }`}
           >
-            <Trophy size={40} className="text-white" />
+            {isSuccess ? (
+              <Trophy size={40} className="text-white" />
+            ) : (
+              <Frown size={40} className="text-white" />
+            )}
           </motion.div>
 
           {/* Performance Message */}
@@ -51,7 +60,7 @@ export function Result({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-3xl font-bold text-gray-800 dark:text-white mb-2"
+            className={`text-3xl font-bold ${isSuccess ? 'text-gray-800' : 'text-red-600'} dark:text-white mb-2`}
           >
             {getPerformanceMessage()}
           </motion.h1>
@@ -93,7 +102,7 @@ export function Result({
             transition={{ delay: 0.6 }}
             className="space-y-3"
           >
-            {hasNext && onNext && (
+            {isSuccess && hasNext && onNext && (
               <button
                 onClick={onNext}
                 className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-lg font-semibold py-3 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2 hover:from-orange-600 hover:to-orange-700 transition-all"

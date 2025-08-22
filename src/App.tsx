@@ -25,8 +25,21 @@ function App() {
     // Apply dark mode on load
     if (settings.darkMode) {
       document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
-  }, [settings.darkMode]);
+
+    // Apply background animation or custom color
+    if (settings.backgroundAnimationEnabled) {
+      document.body.style.background = 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)';
+      document.body.style.backgroundSize = '400% 400%';
+      document.body.style.animation = 'gradientBG 15s ease infinite';
+    } else {
+      document.body.style.background = settings.customBackgroundColor;
+      document.body.style.backgroundSize = 'auto';
+      document.body.style.animation = 'none';
+    }
+  }, [settings.darkMode, settings.backgroundAnimationEnabled, settings.customBackgroundColor]);
 
   const handleStartLesson = () => {
     setCurrentScreen('lesson');
@@ -94,7 +107,7 @@ function App() {
   const hasNextLesson = progress.currentLesson < lessons.length - 1;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex items-center justify-center bg-transparent">
       <AnimatePresence mode="wait">
         {currentScreen === 'home' && (
           <motion.div
